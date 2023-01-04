@@ -7,5 +7,8 @@ namespace Registrar.Models
     public int StudentId { get; set; }
     public string Name { get; set; }
     public string EnrollDate { get; set; }
+    public int CourseId { get; set; }
+    public Course Course { get; set; }
+    public List<StudentCourse> JoinEntities { get; set; }
   }
 }
