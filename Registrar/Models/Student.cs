@@ -9,6 +9,6 @@ namespace Registrar.Models
     public string EnrollDate { get; set; }
     public int CourseId { get; set; }
     public Course Course { get; set; }
-    public List<StudentCourse> JoinEntities { get; set; }
+    public List<StudentDepartment> JoinEntities { get; set; }
   }
 }
