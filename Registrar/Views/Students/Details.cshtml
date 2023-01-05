@@ -1,0 +1,31 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Registrar.Models
+@model Registrar.Models.Student
+
+<h2>Student Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>  
+<h3>@Html.DisplayNameFor(model => model.Course): @Html.DisplayFor(model => model.Course.Name)</h3>
+
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>This Student does not have any courses yet!</p>
+}
+else
+{
+  <h4>This student has the following course(s):</h4>
+  <ul>
+    @foreach(StudentDepartment join in Model.JoinEntities)
+    {
+      <li>Department: @join.Department.Name</li>
+    }
+  </ul>
+}
+
+<p>@Html.ActionLink("Back to Students", "Index")</p>
+<p>@Html.ActionLink("Edit Student or Course", "Edit", new { id = Model.StudentId })</p>
+<p>@Html.ActionLink("Delete Student", "Delete", new { id = Model.StudentId })</p>
+<p>@Html.ActionLink("Add a Course", "AddDepartment", new { id = Model.StudentId })</p>
