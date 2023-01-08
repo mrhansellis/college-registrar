@@ -7,18 +7,17 @@ using System.Linq;
 
 namespace Registrar.Controllers
 {
-  public class DepartmentController : Controller
+  public class DepartmentsController : Controller
   {
     private readonly RegistrarContext _db;
-    public DepartmentController(RegistrarContext db)
+    public DepartmentsController(RegistrarContext db)
     {
       _db = db;
     }
     
     public ActionResult Index()
     {
-      List<Department> model = _db.Departments.ToList();
-      return View(model);
+      return View(_db.Departments.ToList());
     }
     
     public ActionResult Create()
@@ -43,6 +42,27 @@ namespace Registrar.Controllers
       return View(thisDepartment);
     }
 
+    public ActionResult AddStudent(int id)
+    {
+      Department thisDepartment = _db.Departments.FirstOrDefault(departments => departments.DepartmentId == id);
+      ViewBag.StudentId = new SelectList(_db.Students, "StudentId", "Name");
+      return View(thisDepartment);
+    }
+
+    [HttpPost]
+    public ActionResult AddStudent(Department department, int studentId)
+    {
+      #nullable enable
+      StudentDepartment? joinEntity = _db.StudentDepartments.FirstOrDefault(join => (join.StudentId == studentId && join.DepartmentId == department.DepartmentId));
+      #nullable disable
+      if (joinEntity == null && studentId != 0)
+      {
+        _db.StudentDepartments.Add(new StudentDepartment() { StudentId = studentId, DepartmentId = department.DepartmentId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = department.DepartmentId });
+    }
+
     public ActionResult Edit(int id)
     {
       Department thisDepartment = _db.Departments.FirstOrDefault(department => department.DepartmentId == id);
@@ -52,7 +72,7 @@ namespace Registrar.Controllers
     [HttpPost]
     public ActionResult Edit(Department department)
     {
-       _db.SaveChanges();
+      _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
@@ -70,7 +90,15 @@ namespace Registrar.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    
 
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      StudentDepartment joinEntry = _db.StudentDepartments.FirstOrDefault(entry => entry.StudentDepartmentId == joinId);
+      _db.StudentDepartments.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+    
   }
 }
