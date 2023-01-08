@@ -16,11 +16,16 @@
 }
 else
 {
-  <h4>This student has the following course(s):</h4>
+  <h4>This student is in the following department:</h4>
   <ul>
     @foreach(StudentDepartment join in Model.JoinEntities)
     {
       <li>Department: @join.Department.Name</li>
+      @using (Html.BeginForm("DeleteJoin", "Student"))
+      {
+        @Html.Hidden("joinId", @join.StudentDepartmentId)
+        <input type="submit" value="Delete"/>
+      }
     }
   </ul>
 }
