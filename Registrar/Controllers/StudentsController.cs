@@ -48,6 +48,8 @@ namespace Registrar.Controllers
                             .Include(student => student.Course)
                             .Include(student => student.JoinEntities)
                             .ThenInclude(join => join.Department)
+                            .Include(student => student.BindEntities)
+                            .ThenInclude(join => join.Course)
                             .FirstOrDefault(student => student.StudentId == id);
       return View(thisStudent);
     }
@@ -98,6 +100,26 @@ namespace Registrar.Controllers
       if (joinEntity == null && departmentId != 0)
       {
         _db.StudentDepartments.Add(new StudentDepartment() { DepartmentId = departmentId, StudentId = student.StudentId });
+      }
+      return RedirectToAction("Details", new { id = student.StudentId });
+    }
+
+    public ActionResult AddCourse(int id)
+    {
+      Student thisStudent = _db.Students.FirstOrDefault(students => students.StudentId == id);
+      ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+      return View(thisStudent);
+    }
+
+    [HttpPost]
+    public ActionResult AddCourse(Student student, int courseId)
+    {
+      #nullable enable
+      StudentCourse? bindEntity = _db.StudentCourses.FirstOrDefault(join => (join.CourseId == courseId && join.StudentId == student.StudentId));
+      #nullable disable
+      if (bindEntity == null && courseId != 0)
+      {
+        _db.StudentCourses.Add(new StudentCourse() { CourseId = courseId, StudentId = student.StudentId });
       }
       return RedirectToAction("Details", new { id = student.StudentId });
     }

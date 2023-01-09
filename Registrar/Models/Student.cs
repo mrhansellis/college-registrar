@@ -10,5 +10,6 @@ namespace Registrar.Models
     public int CourseId { get; set; }
     public Course Course { get; set; }
     public List<StudentDepartment> JoinEntities { get; set; }
+    public List<StudentCourse> BindEntities { get; set; }
   }
 }

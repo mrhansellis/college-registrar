@@ -39,10 +39,30 @@ namespace Registrar.Controllers
       Course thisCourse = _db.Courses
         .Include(course => course.Students)
         .ThenInclude(student => student.JoinEntities)
-        .ThenInclude(join => join.Student)
-        //.ThenInclude(join => join.Department)
+        .ThenInclude(join => join.Department)
         .FirstOrDefault(course => course.CourseId == id);
       return View(thisCourse);
+    }
+
+    public ActionResult AddStudent( int id)
+    {
+      Course thisCourse = _db.Courses.FirstOrDefault(courses => courses.CourseId ==id);
+      ViewBag.StudentId = new SelectList(_db.Students,"StudentId", "Name");
+      return View(thisCourse);
+    }
+
+    [HttpPost]
+    public ActionResult AddStudent(Course course, int studentId)
+    {
+      #nullable enable
+      StudentCourse? bindEntity = _db.StudentCourses.FirstOrDefault(join => (join.StudentId == studentId && join.CourseId == course.CourseId));
+      #nullable disable
+      if (bindEntity == null && studentId != 0)
+      {
+        _db.StudentCourses.Add(new StudentCourse() { StudentId = studentId, CourseId = course.CourseId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = course.CourseId });
     }
 
     public ActionResult Edit(int id)

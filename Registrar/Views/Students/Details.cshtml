@@ -2,17 +2,53 @@
   Layout = "_Layout";
 }
 
-@using Registrar.Models
-@model Registrar.Models.Student
+@model Registrar.Models.Student;
+@using Registrar.Models;
+@using System.Collections.Generic;
 
 <h2>Student Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>  
-<h3>@Html.DisplayNameFor(model => model.Course): @Html.DisplayFor(model => model.Course.Name)</h3>
+
+@if(@Model.BindEntities.Count == 0)
+{
+  <p>This student has no courses.</p>
+}
+else
+{ 
+  <h4>This student is enrolled in the following courses.</h4>
+  <ul>
+  @foreach(StudentCourse join in Model.BindEntities)
+  {
+    <li>Courses: @join.Course.Name</li>
+    @using (Html.BeginForm("DeleteJoin", "Student"))
+    {
+      @Html.Hidden("bindId", @join.StudentCourseId)
+      <input type="submit" value="Delete"/>
+    }
+    /*string courses = "";
+    @if(course.BindEntities.Count == 0)
+    {
+      courses = "this student has no courses.";
+    }
+    else
+    {
+      List<string> courseList = new List<string>();
+      @foreach(StudentCourse join in course.BindEntities)
+      {
+        courseList.Add(join.Course.Name);
+      }
+      courses = String.Join(", ", courseList);
+    }
+    <li>courses: @courses</li>*/
+  }
+  </ul>
+}
+
 
 @if(@Model.JoinEntities.Count == 0)
 {
-  <p>This Student does not have any courses yet!</p>
+  <p>This Student does not have any departments yet!</p>
 }
 else
 {
@@ -32,6 +68,7 @@ else
 
 <p>@Html.ActionLink("Home", "Index", "Home")</p>
 <p>@Html.ActionLink("Back to Students", "Index")</p>
+<p>@Html.ActionLink("Add a course", "AddCourse", new { id = Model.StudentId })</p>
 <p>@Html.ActionLink("Edit Student or Course", "Edit", new { id = Model.StudentId })</p>
 <p>@Html.ActionLink("Delete Student", "Delete", new { id = Model.StudentId })</p>
 <p>@Html.ActionLink("Add a Department", "AddDepartment", new { id = Model.StudentId })</p>
