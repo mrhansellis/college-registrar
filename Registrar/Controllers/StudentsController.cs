@@ -19,7 +19,8 @@ namespace Registrar.Controllers
     public ActionResult Index()
     {
       List<Student> model = _db.Students
-                            .Include(student => student.Course)
+                            .Include(student => student.JoinEntities)
+                            .ThenInclude(join => join.Department)
                             .ToList();
       return View(model);
     }

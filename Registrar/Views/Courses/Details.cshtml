@@ -10,7 +10,7 @@
 <hr/>
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
-@if(@Model.Students.Count == 0)
+@if(@Model.BindEntities.Count == 0)
 {
   <p>There are no student registered yet</p>
 }
@@ -18,9 +18,11 @@ else
 {
   <h4>Students the course contains:</h4>
   <ul>
-  @foreach(Student student in Model.Students)
+  @foreach(StudentCourse join in Model.BindEntities)
   {
-    string departments = "";
+    <li>@join.Student.Name</li>
+    
+    /*string departments = "";
     @if(student.JoinEntities.Count == 0)
     {
       departments = "This Student is not in any departments.";
@@ -34,14 +36,27 @@ else
       }
       departments = String.Join(", ", departmentList);
     }
-    <li>@student.Name | departments: @departments</li>
+    <li>@student.Name | departments: @departments</li>*/
   }
   </ul>
 }
 
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
-<p>@Html.ActionLink("Back to courses", "Index")</p>
-<p>@Html.ActionLink("Add student", "AddStudent", new { id = Model.CourseId })</p>
-<p>@Html.ActionLink("Edit Courses", "Edit", new { id = Model.CourseId })</p>
-<p>@Html.ActionLink("Delete Course", "Delete", new { id = Model.CourseId })</p>
-<p>@Html.ActionLink("Add new student", "Create", "Students")</p>
+<div>
+  <div class="outside_side_bar">
+    <div class="side_bar">
+      <header>Epic Navi:</header>
+      <br>
+      <span>@Html.ActionLink("Home", "Index", "Home")</span>
+      <br>
+      <span>@Html.ActionLink("Back to courses", "Index")</span>
+      <br>
+      <span>@Html.ActionLink("Add student", "AddStudent", new { id = Model.CourseId })</span>
+      <br>
+      <span>@Html.ActionLink("Edit Courses", "Edit", new { id = Model.CourseId })</span>
+      <br>
+      <span>@Html.ActionLink("Delete Course", "Delete", new { id = Model.CourseId })</span>
+      <br>
+      <span>@Html.ActionLink("Add new student", "Create", "Students")</span>
+    </div>
+  </div>
+</div>

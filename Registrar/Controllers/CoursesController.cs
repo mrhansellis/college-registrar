@@ -36,10 +36,12 @@ namespace Registrar.Controllers
     
     public ActionResult Details(int id)
     {
-      Course thisCourse = _db.Courses
+      Course thisCourse = _db.Courses 
         .Include(course => course.Students)
-        .ThenInclude(student => student.JoinEntities)
-        .ThenInclude(join => join.Department)
+        .ThenInclude(course => course.BindEntities)
+        .Include(student => student.BindEntities)
+        .ThenInclude(join => join.Student)
+        .ThenInclude(join => join.Course)
         .FirstOrDefault(course => course.CourseId == id);
       return View(thisCourse);
     }
@@ -93,5 +95,15 @@ namespace Registrar.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    [HttpPost]
+    public ActionResult DeleteJoin(int bindId)
+    {
+      StudentCourse joinEntry = _db.StudentCourses.FirstOrDefault(entry => entry.StudentCourseId == bindId);
+      _db.StudentCourses.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
   }
 }
