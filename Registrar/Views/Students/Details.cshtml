@@ -21,7 +21,7 @@ else
   @foreach(StudentCourse join in Model.BindEntities)
   {
     <li>Courses: @join.Course.Name</li>
-    @using (Html.BeginForm("DeleteJoin", "Student"))
+    @using (Html.BeginForm("DeleteBind", "Students"))
     {
       @Html.Hidden("bindId", @join.StudentCourseId)
       <input type="submit" value="Delete"/>
@@ -57,7 +57,7 @@ else
     @foreach(StudentDepartment join in Model.JoinEntities)
     {
       <li>Department: @join.Department.Name</li>
-      @using (Html.BeginForm("DeleteJoin", "Student"))
+      @using (Html.BeginForm("DeleteJoin", "Students"))
       {
         @Html.Hidden("joinId", @join.StudentDepartmentId)
         <input type="submit" value="Delete"/>
@@ -66,9 +66,22 @@ else
   </ul>
 }
 
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
-<p>@Html.ActionLink("Back to Students", "Index")</p>
-<p>@Html.ActionLink("Add a course", "AddCourse", new { id = Model.StudentId })</p>
-<p>@Html.ActionLink("Edit Student or Course", "Edit", new { id = Model.StudentId })</p>
-<p>@Html.ActionLink("Delete Student", "Delete", new { id = Model.StudentId })</p>
-<p>@Html.ActionLink("Add a Department", "AddDepartment", new { id = Model.StudentId })</p>
+<div>
+  <div class="outside_side_bar">
+    <div class="side_bar">
+      <header>Epic Navi:</header>
+      <br>
+      <span>@Html.ActionLink("Home", "Index", "Home")</span>
+      <br>
+      <span>@Html.ActionLink("Back to Students", "Index")</span>
+      <br>
+      <span>@Html.ActionLink("Add a course", "AddCourse", new { id = Model.StudentId })</span>
+      <br>
+      <span>@Html.ActionLink("Edit Student or Course", "Edit", new { id = Model.StudentId })</span>
+      <br>
+      <span>@Html.ActionLink("Delete Student", "Delete", new { id = Model.StudentId })</span>
+      <br>
+      <span>@Html.ActionLink("Add a Department", "AddDepartment", new { id = Model.StudentId })</span>
+    </div>
+  </div>
+</div>

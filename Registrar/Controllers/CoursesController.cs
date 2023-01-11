@@ -97,10 +97,10 @@ namespace Registrar.Controllers
     }
 
     [HttpPost]
-    public ActionResult DeleteJoin(int bindId)
+    public ActionResult DeleteBind(int bindId)
     {
-      StudentCourse joinEntry = _db.StudentCourses.FirstOrDefault(entry => entry.StudentCourseId == bindId);
-      _db.StudentCourses.Remove(joinEntry);
+      StudentCourse bindEntry = _db.StudentCourses.FirstOrDefault(entry => entry.StudentCourseId == bindId);
+      _db.StudentCourses.Remove(bindEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

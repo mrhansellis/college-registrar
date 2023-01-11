@@ -132,6 +132,16 @@ namespace Registrar.Controllers
       _db.StudentDepartments.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
-    }    
+    }
+
+    [HttpPost]
+    public ActionResult DeleteBind(int bindId) //maybe bindId
+    {
+      StudentCourse bindEntry = _db.StudentCourses.FirstOrDefault
+      (entry => entry.StudentCourseId == bindId);
+      _db.StudentCourses.Remove(bindEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
