@@ -17,5 +17,14 @@
   <input type="submit" value="Add new department" class="btn btn-default"/>
 }
 
-<p>@Html.ActionLink("Show all Departments", "Index")</p>
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
+<div>
+  <div class="outside_side_bar">
+    <div class="side_bar">
+      <label>Epic Navi:</label>
+      <br>
+      <span>@Html.ActionLink("Show all Departments", "Index")</span>
+      <br>
+      <span>@Html.ActionLink("Home", "Index", "Home")</span>
+    </div>
+  </div>
+</div>

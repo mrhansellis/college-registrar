@@ -1,12 +1,39 @@
 body {
+  background-image: url("../img/sad.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-color: rgb(83, 164, 230);
+}
+
+.out_one
+{
+  align-items: center;
+}
+
+.gotta_make_it_look_like_its_a_college {
   background-image: url("../img/snail_university.png");
+  background-size: 100%;
+  display: flex;
+  background-repeat: no-repeat;
+  justify-content: center;
+  border-radius: 5px;
+  width: 75%;
+  height: 70px;
+  /* padding-top: 4rem;
+  padding-bottom: 32rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  border-radius: 2px; */
+}
+
+h1 {
+  text-align: center;
+  font-size: 70px;
+  font-weight: bold;
 }
 
 .outer {
-  background-color: whitesmoke;
-}
-
-.first {
   margin-top: 75px;
   background-color: beige;
   padding: 10px;
@@ -16,3 +43,41 @@ body {
   box-shadow: 0 4.5px 12px rgb(24, 22, 22), 0 4.5px 12px rgb(24, 22, 22);
 }
 
+.first {
+  list-style-type: none;
+  padding: 0;
+}
+
+.outside_side_bar {
+  display: flex;
+  justify-content: center;
+}
+
+.side_bar {
+  background-color: rgb(109, 72, 72);
+  width: 75%;
+  height: 70px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 100px;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.side_bar header{
+  font-size: 25px;
+  color: black;
+  width: auto;
+  height: auto;
+  background-color: white;
+  user-select: none;
+}
+
+.side_bar span{
+  display: flex;
+  flex-wrap: wrap;
+  /* height: 100%;
+  width: 100%;
+  line-height: 65px; */ 
+}

@@ -15,11 +15,19 @@ else
   <ul>
     @foreach (Student student in Model)
     {
-      <li>@Html.ActionLink($"{student.Name}", "Details", new { id = student.StudentId }) | @student.Course.Name</li>
+      <li>@Html.ActionLink($"{student.Name}", "Details", new { id = student.StudentId })</li>
     }
   </ul>
 }
 
-<p>@Html.ActionLink("Add new Student", "Create")</p>
-
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
+<div>
+  <div class="outside_side_bar">
+    <div class="side_bar">
+      <header>Epic Navi:</header>
+      <br>
+      <span>@Html.ActionLink("Add new Student", "Create")</span>
+      <br>
+      <span>@Html.ActionLink("Home", "Index", "Home")</span>
+    </div>
+  </div>
+</div>

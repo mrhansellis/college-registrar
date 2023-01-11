@@ -24,7 +24,7 @@ else
   <li>@join.Student.Name</li>
   @using(Html.BeginForm("DeleteJoin","Departments"))
   {
-    @Html.Hidden("joingId", @join.StudentDepartmentId)
+    @Html.Hidden("joinId", @join.StudentDepartmentId)
     <input type="submit" value="Delete"/>
   }
 }
@@ -32,10 +32,21 @@ else
 
 }
 
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
-<p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Add a Student", "AddStudent", new{ id = Model.DepartmentId })</p>
-<p>@Html.ActionLink("Edit Department", "Edit", new{ id = Model.DepartmentId })</p>
-<p>@Html.ActionLink("Delete Department", "Delete", new{ id = Model.DepartmentId })</p>
-
+<div>
+  <div class="outside_side_bar">
+    <div class="side_bar">
+      <header>Epic Navi:</header>
+      <br>
+      <span>@Html.ActionLink("Home", "Index", "Home")</span>
+      <br>
+      <span>@Html.ActionLink("Back to list", "Index")</span>
+      <br>
+      <span>@Html.ActionLink("Add a Student", "AddStudent", new{ id = Model.DepartmentId })</span>
+      <br>
+      <span>@Html.ActionLink("Edit Department", "Edit", new{ id = Model.DepartmentId })</span>
+      <br>
+      <span>@Html.ActionLink("Delete Department", "Delete", new{ id = Model.DepartmentId })</span>
+    </div>
+  </div>
+</div>
 

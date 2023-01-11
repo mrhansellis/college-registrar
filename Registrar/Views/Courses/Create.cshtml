@@ -15,5 +15,14 @@
   <input type="submit" value="Add new course"/>
 }
 
-<p>@Html.ActionLink("Show all courses", "Index")</p>
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
+<div>
+  <div class="outside_side_bar">
+    <div class="side_bar">
+      <header>Epic Navi:</header>
+      <br>
+      <span>@Html.ActionLink("Show all courses", "Index")</span>
+      <br>
+      <span>@Html.ActionLink("Home", "Index", "Home")</span>
+    </div>
+  </div>
+</div>
