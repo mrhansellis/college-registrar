@@ -1,30 +1,37 @@
+* {
+  font-family: 'Libre Baskerville', serif;
+}
+
 body {
-  background-image: url("../img/sad.jpg");
+  background-image: url("../img/sad3.jpg");
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
-  background-color: rgb(83, 164, 230);
+  background-repeat: no-repeat;
+  background-color: rgb(164, 207, 239);
+}
+
+a {
+  color: rgb(2, 13, 94)
 }
 
 .out_one
 {
-  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .gotta_make_it_look_like_its_a_college {
-  background-image: url("../img/snail_university.png");
+  background-image: url("../img/prestigious\ university\ grounds.png");
   background-size: 100%;
+  position: relative;
   display: flex;
+  justify-content: space-between;
   background-repeat: no-repeat;
-  justify-content: center;
+  align-items: center;
   border-radius: 5px;
-  width: 75%;
-  height: 70px;
-  /* padding-top: 4rem;
-  padding-bottom: 32rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
-  border-radius: 2px; */
+  width: 25rem;
+  height: 25rem;
 }
 
 h1 {
@@ -34,8 +41,10 @@ h1 {
 }
 
 .outer {
-  margin-top: 75px;
-  background-color: beige;
+  margin-top: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: rgb(248, 246, 223);
   padding: 10px;
   border: 3px;
   border-color: grey;
@@ -54,15 +63,16 @@ h1 {
 }
 
 .side_bar {
-  background-color: rgb(109, 72, 72);
-  width: 75%;
+  background-color: rgba(240, 94, 179, 0.89);
+  width: 90%;
   height: 70px;
   position: relative;
   display: flex;
-  justify-content: space-between;
-  padding-right: 100px;
+  justify-content: space-evenly;
   align-items: center;
   border-radius: 5px;
+  box-shadow:  0 2px 6px rgb(24, 22, 22);
+  opacity: 70%;
 }
 
 .side_bar header{
@@ -70,14 +80,13 @@ h1 {
   color: black;
   width: auto;
   height: auto;
-  background-color: white;
   user-select: none;
 }
 
-.side_bar span{
-  display: flex;
-  flex-wrap: wrap;
-  /* height: 100%;
-  width: 100%;
-  line-height: 65px; */ 
+.side_bar span {
+  font-weight: bolder;
+}
+
+.side_bar span:active {
+  color: black;
 }
