@@ -4,20 +4,33 @@ using Microsoft.EntityFrameworkCore;
 using Registrar.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Registrar.Controllers
 {
+  [Authorize]
   public class DepartmentsController : Controller
   {
     private readonly RegistrarContext _db;
-    public DepartmentsController(RegistrarContext db)
+    private readonly UserManager<ApplicationUser> _userManager;
+    
+    public DepartmentsController(UserManager<ApplicationUser> userManager, RegistrarContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
     
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      return View(_db.Departments.ToList());
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      List<Department> userDepartments = _db.Departments
+                                      .Where(entry => entry.User.Id == currentUser.Id)
+                                      .ToList();
+      return View(userDepartments);
     }
     
     public ActionResult Create()
@@ -26,11 +39,21 @@ namespace Registrar.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Department department)
+    public async Task<ActionResult> Create(Department department)
     {
-      _db.Departments.Add(department);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        return View(department);
+      }
+      else{
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        department.User = currentUser;
+        _db.Departments.Add(department);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      
     }
     
     public ActionResult Details(int id)
