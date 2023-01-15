@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Registrar.Models
 {
@@ -9,5 +10,6 @@ namespace Registrar.Models
     public string CourseNumber { get; set; }
     public List<Student> Students { get; set; }
     public List<StudentCourse> BindEntities { get; set; }
+    public ApplicationUser User { get; set; }
   }
 }
