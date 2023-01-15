@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Registrar.Models;
+
 
 namespace Registrar
 {
@@ -22,13 +24,20 @@ namespace Registrar
                         )
                       );
 
+      builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                      .AddEntityFrameworkStores<RegistrarContext>()
+                      .AddDefaultTokenProviders();
+
       WebApplication app = builder.Build();
 
-      // app.UseDeveloperExceptionPage();
+      app.UseDeveloperExceptionPage();
       app.UseHttpsRedirection();
       app.UseStaticFiles();
 
       app.UseRouting();
+
+      app.UseAuthentication();
+      app.UseAuthorization();
 
       app.MapControllerRoute(
           name: "default",

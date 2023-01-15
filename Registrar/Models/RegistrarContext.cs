@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Registrar.Models
 {
-  public class RegistrarContext : DbContext
+  public class RegistrarContext : IdentityDbContext<ApplicationUser>
   {
     public DbSet<Course> Courses { get; set; }
     public DbSet<Department> Departments { get; set; }
