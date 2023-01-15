@@ -5,5 +5,18 @@
 <h2>Authentication with Identity</h2>
 <p>Register a new user or go back to home</p>
 <hr />
-<p>@Html.ActionLink("Register", "Register")</p>
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
+@if (User.Identity.IsAuthenticated)
+{
+  <p>Hello @User.Identity.Name.</p>
+  @using (Html.BeginForm("LogOff", "Account"))
+  {
+    <input type="submit" class="btn btn-danger" value="Log out" />
+  }
+}
+else
+{
+  <span>@Html.ActionLink("Register", "Register")</span>
+  <span>@Html.ActionLink("Log In", "Login")</span>
+}
+
+<span>@Html.ActionLink("Home", "Index", "Home")</span>
