@@ -4,21 +4,33 @@ using Microsoft.EntityFrameworkCore;
 using Registrar.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Registrar.Controllers
 {
+  [Authorize]
   public class CoursesController : Controller
   {
     private readonly RegistrarContext _db;
-    public CoursesController(RegistrarContext db)
+    private readonly UserManager<ApplicationUser> _userManager;
+
+    public CoursesController(UserManager<ApplicationUser> userManager, RegistrarContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
     
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      List<Course> model = _db.Courses.ToList();
-      return View(model);
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      List<Course> userCourses = _db.Courses
+                        .Where(entry => entry.User.Id == currentUser.Id)
+                        .ToList();
+      return View(userCourses);
     }
     
     public ActionResult Create()
@@ -27,11 +39,21 @@ namespace Registrar.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Course course)
+    public async  Task<ActionResult> Create(Course course)
     {
-      _db.Courses.Add(course);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if(!ModelState.IsValid)
+      {
+        return View(course);
+      }
+      else
+      {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        course.User = currentUser;
+        _db.Courses.Add(course);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
     
     public ActionResult Details(int id)
